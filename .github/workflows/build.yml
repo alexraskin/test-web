@@ -27,5 +27,5 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/dreamsofcode-io/test-web:latest
-            ghcr.io/dreamsofcode-io/test-web:${{ github.sha }}
+            ghcr.io/alexraskin/test-web:latest
+            ghcr.io/alexraskin/test-web:${{ github.sha }}
