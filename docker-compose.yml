@@ -32,6 +32,10 @@ services:
       - "traefik.http.routers.web.rule=Host(`tank.twizy.sh`)"
       - "traefik.http.routers.web.entrypoints=websecure"
       - "traefik.http.routers.web.tls.certresolver=myresolver"
+      - "traefik.http.routers.web-www.rule=Host(`www.tank.twizy.sh`)"
+      - "traefik.http.routers.web-www.entrypoints=websecure"
+      - "traefik.http.routers.web-www.tls.certresolver=myresolver"
+      - "traefik.http.routers.web-www.middlewares=redirect-to-root"
     deploy:
       update_config:
         order: start-first
