@@ -25,7 +25,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   web:
-    image: ghcr.io/alexraskin/test-web:b7f728fb8eaf6df02bb354be7f767b66680414b2
+    image: ghcr.io/alexraskin/test-web:${GIT_COMMIT_HASH:-latest}
     labels:
       - "traefik.enable=true"
       - "traefik.http.services.web.loadbalancer.server.port=8080"
