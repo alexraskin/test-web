@@ -58,6 +58,5 @@ jobs:
 
         scp -o StrictHostKeyChecking=no docker-compose.yml envfile ${{ secrets.DEPLOY_USER }}@$TAILSCALE_HOST:/tmp/
 
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@$TAILSCALE_HOST <<EOF
-docker stack deploy -c /tmp/docker-compose.yml test-web --env-file /tmp/envfile
-EOF
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@$TAILSCALE_HOST \
+          "docker stack deploy -c /tmp/docker-compose.yml test-web --env-file /tmp/envfile"
