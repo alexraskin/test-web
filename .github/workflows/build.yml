@@ -47,12 +47,17 @@ jobs:
         authkey: ${{ secrets.TS_AUTH_KEY }}
         statedir: /tmp/tailscale-state/
 
-    - name: Docker Stack Deploy
-      uses: cssnr/stack-deploy-action@v1
+    - name: Add SSH key
+      uses: webfactory/ssh-agent@v0.9.0
       with:
-        name: test-web
-        file: docker-compose.yml
-        host: ${{ secrets.DEPLOY_HOST }}
-        user: ${{ secrets.DEPLOY_USER }}
-        # ssh_key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
-        env_file: ./envfile
+        ssh-private-key: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+
+    - name: Deploy via Docker stack over Tailscale
+      run: |
+        TAILSCALE_HOST="${{ secrets.DEPLOY_HOST }}"
+
+        scp -o StrictHostKeyChecking=no docker-compose.yml envfile ${{ secrets.DEPLOY_USER }}@$TAILSCALE_HOST:/tmp/
+
+        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@$TAILSCALE_HOST <<EOF
+docker stack deploy -c /tmp/docker-compose.yml test-web --env-file /tmp/envfile
+EOF
