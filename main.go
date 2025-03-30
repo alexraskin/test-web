@@ -13,5 +13,5 @@ func main() {
 		slog.Info("Request received", "method", r.Method, "url", r.URL.String(), "ip", r.RemoteAddr)
 		w.Write([]byte("Hello, World!"))
 	})
-	http.ListenAndServe(":8080", r)
+	http.ListenAndServe(":80", r)
 }
