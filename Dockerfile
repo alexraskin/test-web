@@ -22,6 +22,6 @@ FROM alpine
 
 COPY --from=build /build/test-web /bin/test-web
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["/bin/test-web"]
